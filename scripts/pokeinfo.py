@@ -145,8 +145,7 @@ def handle_voice_command(data):
     """Download and convert cry to Telegram-compatible voice message."""
     cry_url = data['cries'].get('latest')
     if not cry_url:
-        print(json.dumps({"error": "No cry available for this Pokémon"}))
-        sys.exit(1)
+        return None
     
     pokemon_id = data['id']
     pokemon_name = data['name'].title()
@@ -165,17 +164,10 @@ def handle_voice_command(data):
             os.remove(vorbis_path)
         
         if success and os.path.exists(opus_path):
-            print(json.dumps({
-                "voice_path": opus_path,
-                "name": pokemon_name,
-                "id": pokemon_id
-            }))
-        else:
-            print(json.dumps({"error": "Failed to convert cry to voice message"}))
-            sys.exit(1)
-    except Exception as e:
-        print(json.dumps({"error": str(e)}))
-        sys.exit(1)
+            return opus_path
+    except Exception:
+        pass
+    return None
 
 def main():
     if len(sys.argv) < 2:
@@ -188,7 +180,12 @@ def main():
     data = fetch_pokemon(name_or_id)
     
     if voice_mode:
-        handle_voice_command(data)
+        # Output formatted text first
+        print(format_pokemon(data))
+        # Then output voice info as JSON on the last line
+        voice_path = handle_voice_command(data)
+        if voice_path:
+            print(f"\n[VOICE]{json.dumps({'voice_path': voice_path})}[/VOICE]")
     else:
         print(format_pokemon(data))
 

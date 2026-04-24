@@ -61,23 +61,26 @@ pip install soundfile scipy
 
 **AI Integration:** 
 
-When user queries any Pokémon, automatically perform BOTH steps:
+When user queries any Pokémon, run the script **once** with `--voice`:
 
-1. **Get text info:**
-   ```bash
-   python3 scripts/pokeinfo.py <pokemon_name_or_id>
-   ```
+```bash
+python3 scripts/pokeinfo.py <pokemon_name_or_id> --voice
+```
 
-2. **Get cry voice message:**
-   ```bash
-   python3 scripts/pokeinfo.py <pokemon_name_or_id> --voice
-   ```
-   Parse the JSON output to get `voice_path`, then send the voice file via the messaging tool.
+**Output format:**
+- First part: formatted text info (display directly)
+- Last line: `[VOICE]{"voice_path": "/tmp/..."}[/VOICE]`
+
+**Steps:**
+1. Parse the output: everything before `[VOICE]` is text, extract JSON from `[VOICE]...[/VOICE]`
+2. Display the text portion
+3. Send the voice file via the messaging tool
 
 **Example flow for `/pokeinfo pikachu`:**
-1. Run `python3 scripts/pokeinfo.py pikachu` → display formatted text
-2. Run `python3 scripts/pokeinfo.py pikachu --voice` → get `{"voice_path": "/tmp/..."}`
-3. Send the voice file as Telegram voice message
+```bash
+python3 scripts/pokeinfo.py pikachu --voice
+```
+→ Extract text + voice_path → display text + send voice message
 
 ## API Details
 
