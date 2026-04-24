@@ -13,8 +13,28 @@ An OpenClaw skill to query Pokémon information from [PokéAPI](https://pokeapi.
 
 - Query by Pokémon **name** or **ID**
 - Returns: stats, abilities, types, moves, sprites, cries
+- **Multi-language support**: English, 繁體中文, 简体中文, 日本語, 한국어, Français, Deutsch, Español, Italiano
+- Auto-converts Pokémon cries to Telegram voice messages
 - No API key required
 - Lightweight Python script
+
+### Language Support
+
+```bash
+# Set language
+python3 scripts/pokeinfo.py language zh-hant
+
+# List supported languages
+python3 scripts/pokeinfo.py language list
+```
+
+### Voice Message
+
+```bash
+python3 scripts/pokeinfo.py pikachu --voice
+```
+
+Automatically converts Pokémon cries to Telegram-compatible OGG Opus format.
 
 ### Usage
 
@@ -67,6 +87,18 @@ clawhub install pokeinfo
 
 Or manually copy the `pokeinfo/` folder to your OpenClaw `skills/` directory.
 
+### Testing
+
+```bash
+python3 tests/test_pokeinfo.py
+```
+
+**20 unit tests** covering:
+- ✅ All 9 language translations
+- ✅ Stat name localization
+- ✅ Config file management
+- ✅ Output formatting
+
 ---
 
 <a name="chinese"></a>
@@ -78,8 +110,28 @@ Or manually copy the `pokeinfo/` folder to your OpenClaw `skills/` directory.
 
 - 支援以**名稱**或**編號**查詢
 - 回傳：數值、特性、屬性、招式、繪圖、叫聲
+- **多語言支援**：英文、繁體中文、簡體中文、日文、韓文、法文、德文、西班牙文、義大利文
+- 自動轉換寶可夢叫聲為 Telegram Voice Message
 - 無需 API 金鑰
 - 輕量 Python 腳本
+
+### 語言設定
+
+```bash
+# 設定語言
+python3 scripts/pokeinfo.py language zh-hant
+
+# 列出支援語言
+python3 scripts/pokeinfo.py language list
+```
+
+### 叫聲 Voice Message
+
+```bash
+python3 scripts/pokeinfo.py pikachu --voice
+```
+
+自動將寶可夢叫聲轉換為 Telegram 相容的 OGG Opus 格式。
 
 ### 使用方式
 
@@ -131,6 +183,18 @@ clawhub install pokeinfo
 ```
 
 或手動將 `pokeinfo/` 資料夾複製到 OpenClaw 的 `skills/` 目錄。
+
+### 測試
+
+```bash
+python3 tests/test_pokeinfo.py
+```
+
+**20 個單元測試**包含：
+- ✅ 9 種語言翻譯
+- ✅ 數值名稱本地化
+- ✅ 設定檔管理
+- ✅ 輸出格式驗證
 
 ---
 

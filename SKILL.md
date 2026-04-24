@@ -145,7 +145,37 @@ python3 scripts/pokeinfo.py pikachu --voice
 - The API returns 404 if the Pokémon does not exist
 - For evolution chains, species details, or other data, see the full PokéAPI docs at https://pokeapi.co/docs/v2
 
+## Testing
+
+Run unit tests for multi-language support:
+
+```bash
+python3 tests/test_pokeinfo.py
+```
+
+**Test coverage (20 tests):**
+- ✅ All 9 languages supported
+- ✅ Translation completeness check
+- ✅ Language setting persistence
+- ✅ English, Traditional Chinese, Simplified Chinese, Japanese, Korean, French, German, Spanish, Italian translations
+- ✅ Stat name localization
+- ✅ Config file management
+- ✅ Output formatting with localized names
+
+### Test Categories
+
+| Test Class | Description |
+|-----------|-------------|
+| `TestLanguageSupport` | Translation accuracy for all 9 languages |
+| `TestStatNames` | Stat name localization (HP, Attack, etc.) |
+| `TestLanguageList` | Language display names |
+| `TestConfigManagement` | Config file save/load/fallback |
+| `TestFormatOutput` | Output formatting with localization |
+
 ## Resources
 
 ### scripts/
 - `pokeinfo.py` - Main script to fetch and display Pokémon information
+
+### tests/
+- `test_pokeinfo.py` - Unit tests for multi-language functionality
