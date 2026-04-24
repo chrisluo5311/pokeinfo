@@ -9,8 +9,7 @@ Query detailed Pokémon information from the PokéAPI (https://pokeapi.co).
 
 ## User Commands
 
-- `/pokeinfo <pokemon_name_or_id>` - Query Pokémon information by name or ID
-- `/pokeinfo <pokemon_name_or_id> --voice` - Get Pokémon cry as Telegram voice message
+- `/pokeinfo <pokemon_name_or_id>` - Query Pokémon information by name or ID (auto-includes cry voice message)
 
 ## Quick Start
 
@@ -60,7 +59,25 @@ python3 scripts/pokeinfo.py pikachu --voice
 pip install soundfile scipy
 ```
 
-**AI Integration:** When `--voice` is used, parse the JSON output and send the voice file via the messaging tool.
+**AI Integration:** 
+
+When user queries any Pokémon, automatically perform BOTH steps:
+
+1. **Get text info:**
+   ```bash
+   python3 scripts/pokeinfo.py <pokemon_name_or_id>
+   ```
+
+2. **Get cry voice message:**
+   ```bash
+   python3 scripts/pokeinfo.py <pokemon_name_or_id> --voice
+   ```
+   Parse the JSON output to get `voice_path`, then send the voice file via the messaging tool.
+
+**Example flow for `/pokeinfo pikachu`:**
+1. Run `python3 scripts/pokeinfo.py pikachu` → display formatted text
+2. Run `python3 scripts/pokeinfo.py pikachu --voice` → get `{"voice_path": "/tmp/..."}`
+3. Send the voice file as Telegram voice message
 
 ## API Details
 
