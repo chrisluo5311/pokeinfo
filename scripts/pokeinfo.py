@@ -2,12 +2,15 @@
 """
 Pokeinfo - Fetch and format Pokémon information from PokéAPI.
 Usage: python3 pokeinfo.py <pokemon_name_or_id>
+       python3 pokeinfo.py <pokemon_name_or_id> --voice
 """
 
 import sys
+import os
 import json
 import urllib.request
 import urllib.error
+import tempfile
 
 BASE_URL = "https://pokeapi.co/api/v2/pokemon"
 
@@ -29,6 +32,39 @@ def fetch_pokemon(name_or_id):
     except Exception as e:
         print(f"Error: {e}")
         sys.exit(1)
+
+def download_cry(cry_url, output_path):
+    """Download cry audio file."""
+    req = urllib.request.Request(cry_url, headers={
+        'User-Agent': 'Mozilla/5.0 (compatible; Pokeinfo/1.0)'
+    })
+    with urllib.request.urlopen(req, timeout=15) as response:
+        with open(output_path, 'wb') as f:
+            f.write(response.read())
+
+def convert_cry_to_opus(input_path, output_path):
+    """Convert OGG Vorbis cry to OGG Opus for Telegram voice message."""
+    try:
+        import soundfile as sf
+        from scipy import signal
+        
+        data, samplerate = sf.read(input_path)
+        
+        # Opus only supports 8000, 12000, 16000, 24000, 48000 Hz
+        # PokeAPI cries are typically 32728 Hz, resample to 48000 Hz
+        target_rate = 48000
+        num_samples = int(len(data) * target_rate / samplerate)
+        data_resampled = signal.resample(data, num_samples)
+        
+        sf.write(output_path, data_resampled, target_rate, format='OGG', subtype='OPUS')
+        return True
+    except ImportError as e:
+        print(f"Error: Missing dependency - {e}")
+        print("Install with: pip install soundfile scipy")
+        return False
+    except Exception as e:
+        print(f"Error converting cry: {e}")
+        return False
 
 def format_pokemon(data):
     """Format Pokémon data into readable output."""
@@ -105,14 +141,56 @@ def format_pokemon(data):
     
     return "\n".join(lines)
 
+def handle_voice_command(data):
+    """Download and convert cry to Telegram-compatible voice message."""
+    cry_url = data['cries'].get('latest')
+    if not cry_url:
+        print(json.dumps({"error": "No cry available for this Pokémon"}))
+        sys.exit(1)
+    
+    pokemon_id = data['id']
+    pokemon_name = data['name'].title()
+    
+    # Create temp files
+    temp_dir = tempfile.gettempdir()
+    vorbis_path = os.path.join(temp_dir, f"pokeinfo_cry_{pokemon_id}_vorbis.ogg")
+    opus_path = os.path.join(temp_dir, f"pokeinfo_cry_{pokemon_id}_opus.ogg")
+    
+    try:
+        download_cry(cry_url, vorbis_path)
+        success = convert_cry_to_opus(vorbis_path, opus_path)
+        
+        # Clean up vorbis file
+        if os.path.exists(vorbis_path):
+            os.remove(vorbis_path)
+        
+        if success and os.path.exists(opus_path):
+            print(json.dumps({
+                "voice_path": opus_path,
+                "name": pokemon_name,
+                "id": pokemon_id
+            }))
+        else:
+            print(json.dumps({"error": "Failed to convert cry to voice message"}))
+            sys.exit(1)
+    except Exception as e:
+        print(json.dumps({"error": str(e)}))
+        sys.exit(1)
+
 def main():
     if len(sys.argv) < 2:
-        print("Usage: python3 pokeinfo.py <pokemon_name_or_id>")
+        print("Usage: python3 pokeinfo.py <pokemon_name_or_id> [--voice]")
         sys.exit(1)
     
     name_or_id = sys.argv[1]
+    voice_mode = '--voice' in sys.argv
+    
     data = fetch_pokemon(name_or_id)
-    print(format_pokemon(data))
+    
+    if voice_mode:
+        handle_voice_command(data)
+    else:
+        print(format_pokemon(data))
 
 if __name__ == "__main__":
     main()

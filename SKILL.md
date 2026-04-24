@@ -10,6 +10,7 @@ Query detailed Pokémon information from the PokéAPI (https://pokeapi.co).
 ## User Commands
 
 - `/pokeinfo <pokemon_name_or_id>` - Query Pokémon information by name or ID
+- `/pokeinfo <pokemon_name_or_id> --voice` - Get Pokémon cry as Telegram voice message
 
 ## Quick Start
 
@@ -35,6 +36,31 @@ python3 scripts/pokeinfo.py 1          # Bulbasaur by ID
 - **Sprites**: Official artwork URL
 - **Cries**: Latest cry audio URL
 - **Level-up moves**: Learnset for the most recent game version (limited to 20 moves)
+
+## Voice Message (Pokémon Cry)
+
+The script can convert Pokémon cries to Telegram-compatible voice messages:
+
+```bash
+python3 scripts/pokeinfo.py pikachu --voice
+```
+
+**Output:**
+```json
+{"voice_path": "/tmp/pokeinfo_cry_25_opus.ogg", "name": "Pikachu", "id": 25}
+```
+
+**How it works:**
+- PokeAPI provides cries in **OGG Vorbis** format (~32728 Hz)
+- Telegram voice messages require **OGG Opus** format (48000 Hz)
+- The script automatically downloads, resamples, and converts the audio
+
+**Voice Dependencies:**
+```bash
+pip install soundfile scipy
+```
+
+**AI Integration:** When `--voice` is used, parse the JSON output and send the voice file via the messaging tool.
 
 ## API Details
 
