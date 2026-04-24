@@ -7,6 +7,22 @@ description: Query Pokémon information from PokéAPI. Use when the user wants t
 
 Query detailed Pokémon information from the PokéAPI (https://pokeapi.co).
 
+## Installation
+
+### From ClawHub (Recommended)
+
+```bash
+clawhub install pokeinfo
+```
+
+### From GitHub
+
+```bash
+git clone https://github.com/chrisluo5311/pokeinfo.git
+```
+
+Or manually copy the `pokeinfo/` folder to your OpenClaw `skills/` directory.
+
 ## User Commands
 
 - `/pokeinfo <pokemon_name_or_id>` - Query Pokémon information by name or ID (auto-includes cry voice message)
