@@ -7,6 +7,10 @@ description: Query Pokémon information from PokéAPI. Use when the user wants t
 
 Query detailed Pokémon information from the PokéAPI (https://pokeapi.co).
 
+## User Commands
+
+- `/pokeinfo <pokemon_name_or_id>` - Query Pokémon information by name or ID
+
 ## Quick Start
 
 Use the bundled script to fetch and format Pokémon data:
