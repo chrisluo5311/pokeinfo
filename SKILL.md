@@ -10,6 +10,8 @@ Query detailed Pokémon information from the PokéAPI (https://pokeapi.co).
 ## User Commands
 
 - `/pokeinfo <pokemon_name_or_id>` - Query Pokémon information by name or ID (auto-includes cry voice message)
+- `/pokeinfo language <lang>` - Set output language (e.g., `en`, `zh-hant`, `zh-hans`, `ja`, `ko`)
+- `/pokeinfo language list` - List all supported languages
 
 ## Quick Start
 
@@ -25,6 +27,37 @@ python3 scripts/pokeinfo.py pikachu
 python3 scripts/pokeinfo.py charizard
 python3 scripts/pokeinfo.py 1          # Bulbasaur by ID
 ```
+
+## Language Support
+
+Pokeinfo supports multiple languages for Pokémon names, types, abilities, and UI text.
+
+### Set Language
+
+```bash
+python3 scripts/pokeinfo.py language zh-hant
+```
+
+### List Supported Languages
+
+```bash
+python3 scripts/pokeinfo.py language list
+```
+
+**Supported languages:**
+| Code | Language |
+|------|----------|
+| `en` | English |
+| `zh-hant` | 繁體中文 |
+| `zh-hans` | 简体中文 |
+| `ja` | 日本語 |
+| `ko` | 한국어 |
+| `fr` | Français |
+| `de` | Deutsch |
+| `es` | Español |
+| `it` | Italiano |
+
+Language settings are saved to `~/.config/pokeinfo/config.json`.
 
 ## What the Script Returns
 
