@@ -1,6 +1,6 @@
 ---
 name: pokeinfo
-description: Query Pokémon information from PokéAPI. Use when the user wants to look up Pokémon details by name or ID, including stats, abilities, types, moves, sprites, and cries. Triggers on requests like "get info about [pokemon]", "what is [pokemon]", "pokemon stats", or any query related to Pokémon data retrieval.
+description: Query Pokémon / Pokemon information from PokéAPI. Lookup Pokemon details by name or ID - stats, abilities, types, moves, sprites, and cries. Supports 9 languages including English, Chinese, Japanese, Korean, French, German, Spanish, Italian. Triggers on requests like "pokemon info", "get info about [pokemon]", "what is [pokemon]", "pokemon stats", or any query related to Pokémon / Pokemon data retrieval.
 ---
 
 # Pokeinfo
