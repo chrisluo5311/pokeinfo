@@ -285,7 +285,12 @@ def fetch_url(url):
 
 def fetch_pokemon(name_or_id):
     """Fetch Pokémon data from PokéAPI."""
-    url = f"{BASE_URL}/{name_or_id.lower().strip()}"
+    name_or_id = name_or_id.lower().strip()
+    # Strip leading zeros from numeric IDs (e.g., "0006" -> "6")
+    if name_or_id.isdigit():
+        name_or_id = str(int(name_or_id))
+    
+    url = f"{BASE_URL}/{name_or_id}"
     try:
         return fetch_url(url)
     except urllib.error.HTTPError as e:

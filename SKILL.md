@@ -106,14 +106,16 @@ python3 scripts/pokeinfo.py <pokemon_name_or_id> --voice
 
 **Steps:**
 1. Parse the output: everything before `[VOICE]` is text, extract JSON from `[VOICE]...[/VOICE]`
-2. Display the text portion
+2. **Display the text portion AS-IS** — do not add translations, explanations, or annotations in other languages
 3. Send the voice file via the messaging tool
+
+**IMPORTANT:** The script already localizes all text (Pokémon names, types, abilities, stats, UI labels) based on the user's language setting. Do NOT add parenthetical translations like `Type(s): Feuer, Flug（火系、飛行系）`. Just output the script result directly.
 
 **Example flow for `/pokeinfo pikachu`:**
 ```bash
 python3 scripts/pokeinfo.py pikachu --voice
 ```
-→ Extract text + voice_path → display text + send voice message
+→ Extract text + voice_path → display text exactly as output + send voice message
 
 ## API Details
 
