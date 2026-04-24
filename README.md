@@ -15,8 +15,10 @@ An OpenClaw skill to query Pokémon information from [PokéAPI](https://pokeapi.
 - Returns: stats, abilities, types, moves, sprites, cries
 - **Multi-language support**: English, 繁體中文, 简体中文, 日本語, 한국어, Français, Deutsch, Español, Italiano
 - Auto-converts Pokémon cries to Telegram voice messages
-- No API key required
+- **No API key required** — uses the public PokéAPI
 - Lightweight Python script
+
+> **Note:** ClawHub may flag this skill as "Requires sensitive credentials" due to network requests to the public PokéAPI. This is a false positive — **no API key, token, or credentials are needed**.
 
 ### Language Support
 
@@ -112,8 +114,10 @@ python3 tests/test_pokeinfo.py
 - 回傳：數值、特性、屬性、招式、繪圖、叫聲
 - **多語言支援**：英文、繁體中文、簡體中文、日文、韓文、法文、德文、西班牙文、義大利文
 - 自動轉換寶可夢叫聲為 Telegram Voice Message
-- 無需 API 金鑰
+- **無需 API 金鑰** — 使用公開的 PokéAPI
 - 輕量 Python 腳本
+
+> **注意：** ClawHub 可能因網路請求標記此 skill 為「需要敏感憑證」。這是誤判 — **不需要任何 API key、token 或憑證**。
 
 ### 語言設定
 

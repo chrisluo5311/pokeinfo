@@ -7,6 +7,8 @@ description: Query Pokémon / Pokemon information from PokéAPI. Lookup Pokemon 
 
 Query detailed Pokémon information from the PokéAPI (https://pokeapi.co).
 
+> **Security Note:** This skill makes HTTP requests to the public PokéAPI (`pokeapi.co`) and GitHub (`raw.githubusercontent.com`) for Pokémon data and cry audio files. **No API key, token, or credentials are required.** ClawHub's static analysis may flag this as "Requires sensitive credentials" — this is a false positive.
+
 ## Installation
 
 ### From ClawHub (Recommended)
